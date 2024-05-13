@@ -50,9 +50,11 @@ public class Simon_Server {
                 {
                     // Determine if the client message is valid
 
-                    Integer value = null;
                     Integer firstOccuranceIndex = null;
-                    boolean validMessage = true;
+                    String answerMessage = "";
+
+                    // Remove white space from client message
+
                     for (int i = 0; i < messageFromClient.length(); i++) {
                         char character = messageFromClient.charAt(i);
                         if(character == '*'
@@ -66,29 +68,32 @@ public class Simon_Server {
                             }
                             else
                             {
-                                validMessage = false;
+                                answerMessage = "Too many operators, try again";
                                 break;
                             }
                         }
                     }
 
-                    if(!validMessage)
+                    if(firstOccuranceIndex == null)
                     {
-                        continue;
+                        answerMessage = "No operators found, try again";
+                    }
+                    else
+                    {
+                        String
                     }
 
+                    // Send return message
                     OutputStream clientOut = client.getOutputStream();
                     PrintWriter printWriter = new PrintWriter(clientOut, true);
-                    String answerMessage = "Hello, " + messageFromClient;
                     printWriter.println(answerMessage);
 
                     // Close streams
                     clientOut.close();
                     printWriter.close();
                 }
-
                 // Close sockets
-                else
+                else if (messageFromClient.equalsIgnoreCase("bye"))
                 {
                     clientIn.close();
                     server.close();
